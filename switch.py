@@ -9,9 +9,6 @@ try:
     while True:
         if GPIO.input(24) == GPIO.HIGH:
             GPIO.output(25, GPIO.HIGH)
-            sleep(0.5)
-            GPIO.output(25, GPIO.LOW)
-            sleep(0.5)
         else:
             GPIO.output(25, GPIO.LOW)
         sleep(0.01)
