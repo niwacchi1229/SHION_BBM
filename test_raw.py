@@ -18,12 +18,14 @@ picam0.set_controls({"ExposureTime": SHUTTER_SPEED, "AnalogueGain": ISO_GAIN})
 
 # カメラの設定、開始
 # config0 = picam0.create_preview_configuration()でpreviewを使うとクロップされる。stillにするとフル画角で出てくるようになる
-config0 = picam0.create_still_configuration()
+config0 = picam0.create_still_configuration(raw={})
 picam0.configure(config0)
 picam0.start()
 
 # カメラを安定させるための時間
 time.sleep(0.5)
+
+print("撮影開始")
 
 # 撮影の基準時間
 start_time = time.time()
@@ -41,7 +43,7 @@ try:
         print(wait_time)
         
         # ファイル名
-        file0 = f"image_cam0_modeM_100000_ISO4_{i:02d}.jpg"
+        file0 = f"raw_SS100000_ISO4_{i:02d}.dng"
 
         # 撮影
         picam0.capture_file(file0)
