@@ -4,14 +4,19 @@ import os
 
 # パラメーターの設定
 # シャッタースピード：1s = 1,000,000
-SHUTTER_SPEED = 10000
+SHUTTER_SPEED = 100000
 # ISOの設定：1.0(ISO100),2.0(ISO200)
-ISO_GAIN = 1.0
+ISO_GAIN = 4.0
 
 # 各カメラのインスタンスを作成（コンストラクタにインデックスを渡す）
 # 引数を省略した場合、デフォルト（通常は0）のカメラが選択される
 picam0 = Picamera2(0)
 # picam1 = Picamera2(1)
+
+# マニュアル設定を適用
+# 露光時間、ゲインを固定する
+picam0.set_controls({"ExposureTime": SHUTTER_SPEED, "AnalogueGain": ISO_GAIN})
+# picam1.set_controls({"ExposureTime": SHUTTER_SPEED, "AnalogueGain": ISO_GAIN})
 
 # それぞれのカメラを個別に設定・開始
 # カメラの設定
@@ -23,13 +28,8 @@ picam0.configure(config0)
 picam0.start()
 # picam1.start()
 
-# マニュアル設定を適用
-# 露光時間、ゲインを固定する
-picam0.set_controls({"ExposureTime": SHUTTER_SPEED, "AnalogueGain": ISO_GAIN})
-# picam1.set_controls({"ExposureTime": SHUTTER_SPEED, "AnalogueGain": ISO_GAIN})
-
 # カメラを安定させるための時間
-time.sleep(1)
+time.sleep(0.5)
 
 # 撮影の基準時間
 start_time = time.time()
@@ -47,7 +47,7 @@ try:
         print(wait_time)
         
         # ファイル名
-        file0 = f"image_cam0_modeM_{i:02d}.jpg"
+        file0 = f"image_cam0_modeM_100000_ISO4_{i:02d}.jpg"
         # file1 = f"image_cam1_{i:02d}.jpg"
 
         # 撮影
