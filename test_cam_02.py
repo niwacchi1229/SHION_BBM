@@ -23,13 +23,25 @@ picam0.start()
 # picam1.configure(config1)
 # picam1.start()
 
-time.sleep(2)
+# カメラを安定させるための時間
+time.sleep(1)
+
+# 撮影の基準時間
+start_time = time.time()
 
 try:
     for i in range(1, 23): # 1~22まで繰り返す
-        start_time = time.time() #処理開始時間の記録
+        # 次の撮影予定時間
+        target_time = start_time + (i - 1)
+
+        # 予定の時間まで待機
+        wait_time = target_time - time.time()
+        if wait_time > 0:
+            time.sleep(wait_time)
+
+        print(wait_time)
         
-        # ファイル名の生成
+        # ファイル名
         file0 = f"image_cam0_{i:02d}.jpg"
         # file1 = f"image_cam1_{i:02d}.jpg"
 
@@ -37,19 +49,11 @@ try:
         picam0.capture_file(file0)
         # picam1.capture_file(file1)
 
-        print(f"{i}/22 枚撮影完了")
-        
-        # 1秒間隔を保つために待機（撮影処理にかかった時間を差し引いて待機することでより正確になる
-        elapsed = time.time() - start_time
-        wait_time = max(0, 1.0 - elapsed)
-        time.sleep(wait_time)
-
-        print(wait_time)
+        print(f"{i}/22 枚")
 
 except KeyboardInterrupt:
     print("\n中断されました")
         
-
 finally:
     # 後処理
     picam0.stop()
