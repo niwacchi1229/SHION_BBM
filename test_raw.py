@@ -2,6 +2,12 @@ from picamera2 import Picamera2
 import time
 import os
 
+# 保存するフォルダ名の設定
+SAVE_DIR = "photos"
+
+# フォルダ作成（すでに存在してもエラーにならないように）
+os.makedirs(SAVE_DIR, exist_ok=True)
+
 # パラメーターの設定
 # シャッタースピード：1s = 1,000,000
 SHUTTER_SPEED = 100000
@@ -43,10 +49,11 @@ try:
         print(wait_time)
         
         # ファイル名
-        file0 = f"raw_SS100000_ISO4_{i:02d}.dng"
+        filename = f"raw_SS100000_ISO4_{i:02d}.dng"
+        filepath = os.path.join(SAVE_DIR, filename)
 
         # 撮影
-        picam0.capture_file(file0, "raw")
+        picam0.capture_file(filepath, "raw")
 
         print(f"{i}/22 枚")
 
