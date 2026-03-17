@@ -46,7 +46,7 @@ try:
         file0 = f"raw_SS100000_ISO4_{i:02d}.dng"
 
         # 撮影
-        picam0.capture_file(file0)
+        picam0.capture_file(file0, "raw")
 
         print(f"{i}/22 枚")
 
