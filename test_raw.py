@@ -3,8 +3,8 @@ import time
 import os
 
 # 保存するフォルダ名の設定
-SAVE_DIR = "photos"
-
+timestamp = time.strftime("%Y%m%d_H%M%S")
+SAVE_DIR = f"photos_{timestamp}"
 # フォルダ作成（すでに存在してもエラーにならないように）
 os.makedirs(SAVE_DIR, exist_ok=True)
 
