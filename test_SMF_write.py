@@ -15,12 +15,25 @@ Flash = MT25QL01GBBB.flash()
 print("--- 外部フラッシュメモリの書き込み・読み出しテストを開始します ---")
 
 try:
+
+    img = img.convert("RGB")
+    with open("test_input.jpg" , "rb") as f :
+        img_bin = f.read()
+    write_data = list(img_bin)
+    file_size = len(write_data)
+    print(f"ファイルサイズ: {file_size} バイト")
+    print(write_data)
+
     # 1. 消去 (Erase)
     # ----------------------------------------------------------------
-    # Flashメモリは、書き込む前に該当領域を消去する必要があります。
-    # ここではTEST_ADDRESSを含む4KBのサブセクタを消去します。
-    print(f"1. アドレス {hex(TEST_ADDRESS)} を含む4KBサブセクタを消去します...")
-    Flash.SUBSECTOR_4KB_ERASE_OF(TEST_ADDRESS)
+    # Flashメモリは、書き込む前に該当領域を消去する必要があります
+    # ファイルサイズ分すべて消去
+    print(f"1. アドレス {hex(TEST_ADDRESS)} から必要な範囲を消去")
+    # 4KB単位で必要回数繰り替えす
+    num_sectors = (file_size // 4096) + 1
+    for i in range(num_sectors):
+        addr = TEST_ADDRESS + (i * 4096)
+        Flash.SUBSECTOR_4KB_ERASE_OF(addr)
     print("   -> 消去コマンドを送信しました。")
     # 消去処理には時間がかかるため、少し待機します。
     # (ライブラリ内でビジー状態をチェックしていますが、念のため)
@@ -30,19 +43,19 @@ try:
     # 2. 書き込み (Write)
     # ----------------------------------------------------------------
     # テスト文字列をバイトのリストに変換します。
-    img = img.convert("RGB")
-    with open("test_input.jpg" , "rb") as f :
-        img = f.read()
-    write_data = list(img)
-
-    print(write_data)
-
-    print(f"\n2. アドレス {hex(TEST_ADDRESS)} にデータを書き込みます...")
-    Flash.WRITE_DATA_BYTES_SMF(TEST_ADDRESS , write_data)
-    # print(f"   -> 書き込んだデータ: ")
     
-    status = Flash.read_status_register()
-    print(f"   -> 書き込み直後のステータスレジスタ値: {hex(status)} ({bin(status)})")
+    # 書き込み - 256バイトずつに分割して書き込む
+    print(f"\n2. アドレス {hex(TEST_ADDRESS)} にデータを書き込みます...")
+
+    page_size = 256
+    for i in range(0, file_size, page_size):
+        # 256バイトずつ切り出す
+        chunk = write_data[i : i + page_size]
+        # アドレスをずらしながら書き込む
+        Flash.WRITE_DATA_BYTES_SMF(TEST_ADDRESS + i, chunk)
+
+        if (i // page_size) % 10 == 0:
+            print(f"  -> 進捗: {i}/{file_size} bytes")    
 
     print("   -> 書き込み完了。")
     time.sleep(0.1)
