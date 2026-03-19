@@ -66,24 +66,16 @@ try:
     print("   -> READ_DATA_BYTES_SMF関数から戻りました。")
     print(f"   -> 読み出した生のバイトデータ: {read_data_bytes}") # 取得した生データを表示
     
-    # 読み出したバイトリストを文字列に変換します。
-    read_string = ""
-    if read_data_bytes:
-        try:
-            print("   -> バイトデータをUTF-8文字列にデコードします...")
-            read_string = bytes(read_data_bytes).decode('utf-8')
-            print("   -> デコード成功。")
-        except UnicodeDecodeError:
-            read_string = "（デコード不可能なバイナリデータ）"
-            print("   -> デコード失敗。")
-
-    print(f"   -> 読み出したデータ: '{read_string}'")
-    print("   -> 読み出し完了。")
+    
     
     # 4. 検証 (Verify)
     # ----------------------------------------------------------------
-    print("\n4. データの検証を行います...")
-    if img == read_string:
+    # print("\n4. データの検証を行います...")
+    #if img == read_string:
+    #    print("   ✅ [成功] 書き込んだデータと読み出したデータが完全に一致しました！")
+    #else:
+    #    print("   ❌ [失敗] データが一致しませんでした。")
+    if list(read_data_bytes) == write_data:
         print("   ✅ [成功] 書き込んだデータと読み出したデータが完全に一致しました！")
     else:
         print("   ❌ [失敗] データが一致しませんでした。")
