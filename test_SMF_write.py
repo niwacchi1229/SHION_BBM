@@ -15,11 +15,11 @@ Flash = MT25QL01GBBB.flash()
 print("--- 外部フラッシュメモリの書き込み・読み出しテストを開始します ---")
 
 try:
-
+    #画像をバイナリデータに変換
     img = img.convert("RGB")
     with open("test_input.jpg" , "rb") as f :
         img_bin = f.read()
-    write_data = list(img_bin)
+    write_data = list(img_bin)  # バイナリデータをリスト化しないとMT~~が動いてくれない
     file_size = len(write_data)
     print(f"ファイルサイズ: {file_size} バイト")
     print(write_data)
@@ -39,10 +39,6 @@ try:
     # (ライブラリ内でビジー状態をチェックしていますが、念のため)
     time.sleep(0.5) 
     print("   -> 消去完了。")
-
-    # 2. 書き込み (Write)
-    # ----------------------------------------------------------------
-    # テスト文字列をバイトのリストに変換します。
     
     # 書き込み - 256バイトずつに分割して書き込む
     print(f"\n2. アドレス {hex(TEST_ADDRESS)} にデータを書き込みます...")
