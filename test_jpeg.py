@@ -1,12 +1,22 @@
 import cv2
 import numpy as np
-import time
-import glob
+import rawpy
 
-# 画像を開く
-img = cv2.imread('input.dng')
+# 読み込む画像ファイル
+input_path = 'input.dng'
+output_path = 'genzou_01.jpg'
 
 try:
+    # rawpyでDNGを開く
+    with rawpy.imread(input_path) as raw:
+        # 現像処理
+        # use_camera_wb=True : カメラの設定通りの色にする
+        # no_auto_bright=False : 明るさを自動調節する
+        rgb = raw.postprocess(use_camera_wb=True, no_auto_bright=False, bright=1.0)
+
+    # OpenCVで扱えるように色を変換
+    img = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+
     # リサイズ
     compression_pith = 2
     new_width = img.shape[1] // compression_pith

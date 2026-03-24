@@ -4,9 +4,9 @@ import os
 
 # パラメーターの設定
 # シャッタースピード：1s = 1,000,000
-SHUTTER_SPEED = 100000
+SHUTTER_SPEED = 200000
 # ISOの設定：1.0(ISO100),2.0(ISO200)
-ISO_GAIN = 4.0
+ISO_GAIN = 2.0
 
 # 各カメラのインスタンスを作成（コンストラクタにインデックスを渡す）
 # 引数を省略した場合、デフォルト（通常は0）のカメラが選択される
@@ -35,7 +35,7 @@ time.sleep(0.5)
 start_time = time.time()
 
 try:
-    for i in range(1, 23): # 1~22まで繰り返す
+    for i in range(1, 1): # 1~22まで繰り返す
         # 次の撮影予定時間
         target_time = start_time + (i - 1)
 
