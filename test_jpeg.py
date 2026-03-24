@@ -20,7 +20,15 @@ try:
 
     # ファイル名
     file_name = f"image_resize_{i:02d}.jpg"
-    cv2.imwrite('')
+    cv2.imwrite(file_name, img_resized, params)
+
+    print(f"圧縮完了　サイズ: {new_height}✕{new_width}")
+
+except Exception as e:
+    print(f"\nエラーが発生しました: {e}")
+
+finally:
+    print("\n--- 終了します ---")
 
 
 
