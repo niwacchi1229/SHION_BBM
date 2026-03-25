@@ -35,7 +35,7 @@ time.sleep(0.5)
 start_time = time.time()
 
 try:
-    for i in range(1, 2): # 1~22まで繰り返す
+    for i in range(1, 23): # 1~22まで繰り返す
         # 次の撮影予定時間
         target_time = start_time + (i - 1)
 
