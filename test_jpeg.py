@@ -1,16 +1,16 @@
 import cv2
 import numpy as np
 import rawpy
+import os
 
 print("Jpegへの現像を開始します")
 
 try:
     # 設定項目
     # JPEGのクオリティは0~100で指定する
-    quality = 100
+    quality = 50
     # リサイズ(各辺を何分の1にするか)
-    compression_pith = 2
-
+    compression_pith = 3
     # 読み込む画像ファイル
     input_path = 'input.dng'
     # 出力されるファイル名
@@ -35,11 +35,25 @@ try:
 
     # Jpeg形式で保存
     params = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
+    cv2.imwrite(output_path, img_resized, params)
+    
+    # 現像前のデータサイズ
+    size_before_bytes = os.path.getsize(input_path)
+    size_before_kb = os.path.getsize(input_path) / 1024
+    size_before_mb = os.path.getsize(input_path) / (1024 * 1024)
+    # 現像後のサイズ取得
+    size_after_bytes = os.path.getsize(output_path)
+    size_after_kb = os.path.getsize(output_path) / 1024
+    size_after_mb = os.path.getsize(output_path) / (1024 * 1024)
 
-    # ファイル名
-    file_name = f"image_resized.jpg"
-    cv2.imwrite(file_name, img_resized, params)
-
+    # 結果の表示
+    print(f"現像前 (RAW): {size_before_bytes} bytes")
+    print(f"現像前 (RAW): {size_before_kb:.2f} KB")
+    print(f"現像前 (RAW): {size_before_mb:.2f} MB")
+    print(f"現像後 (JPEG): {size_after_bytes} bytes")
+    print(f"現像後 (JPEG): {size_after_kb:.2f} KB")
+    print(f"現像後 (JPEG): {size_after_mb:.2f} MB")
+    print(f"圧縮率 {(size_after_bytes / size_before_bytes) * 100:.1f}%")
     print(f"圧縮完了 サイズ: {new_height}✕{new_width}")
 
 except Exception as e:
@@ -47,15 +61,3 @@ except Exception as e:
 
 finally:
     print("\n--- 終了します ---")
-
-
-#if img is None:
-#    print("画像ファイルが見つからないか、読み込めていない")
-#else:
-    # 設定項目
-#    campression_pith = 15
-#    quality = 10
-
-    # リサイズ
-#    img_resized = cv2,resize(img, new_size, interpolation=cv2.INTER_AREA)
-    
