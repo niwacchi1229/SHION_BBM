@@ -2,11 +2,11 @@ import cv2
 import numpy as np
 import rawpy
 
-print("Jpegへの現像を開始します")
+print("WebPへの現像を開始します")
 
 try:
     # 設定項目
-    # JPEGのクオリティは0~100で指定する
+    # WEBPのクオリティは0~100で指定する(低いほど高圧縮)
     quality = 100
     # リサイズ(各辺を何分の1にするか)
     compression_pith = 2
@@ -14,7 +14,7 @@ try:
     # 読み込む画像ファイル
     input_path = 'input.dng'
     # 出力されるファイル名
-    output_path = f'img_resized_Q{quality}_C{compression_pith}.jpg'
+    output_path = f"img_resized_Q{quality}_C{compression_pith}.webp"
 
     # rawpyでDNGを開く
     with rawpy.imread(input_path) as raw:
@@ -33,12 +33,11 @@ try:
 
     img_resized = cv2.resize(img, new_size, interpolation=cv2.INTER_AREA)
 
-    # Jpeg形式で保存
-    params = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
+    # WebP形式で保存
+    params = [int(cv2.IMWRITE_WEBP_QUALITY), quality]
 
     # ファイル名
-    file_name = f"image_resized.jpg"
-    cv2.imwrite(file_name, img_resized, params)
+    cv2.imwrite(output_path, img_resized, params)
 
     print(f"圧縮完了 サイズ: {new_height}✕{new_width}")
 
@@ -49,13 +48,4 @@ finally:
     print("\n--- 終了します ---")
 
 
-#if img is None:
-#    print("画像ファイルが見つからないか、読み込めていない")
-#else:
-    # 設定項目
-#    campression_pith = 15
-#    quality = 10
-
-    # リサイズ
-#    img_resized = cv2,resize(img, new_size, interpolation=cv2.INTER_AREA)
     
