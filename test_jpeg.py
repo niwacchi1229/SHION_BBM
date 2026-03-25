@@ -37,7 +37,7 @@ try:
     params = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
     cv2.imwrite(output_path, img_resized, params)
     
-    # 現像前のデータサイズ
+    # 現像前のデータサイズ取得
     size_before_bytes = os.path.getsize(input_path)
     size_before_kb = os.path.getsize(input_path) / 1024
     size_before_mb = os.path.getsize(input_path) / (1024 * 1024)
@@ -54,7 +54,7 @@ try:
     print(f"現像後 (JPEG): {size_after_kb:.2f} KB")
     print(f"現像後 (JPEG): {size_after_mb:.2f} MB")
     print(f"圧縮率 {(size_after_bytes / size_before_bytes) * 100:.1f}%")
-    print(f"圧縮完了 サイズ: {new_height}✕{new_width}")
+    print(f"圧縮完了 サイズ: {new_height} ✕ {new_width}")
 
 except Exception as e:
     print(f"\nエラーが発生しました: {e}")

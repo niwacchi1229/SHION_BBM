@@ -1,16 +1,16 @@
 import cv2
 import numpy as np
 import rawpy
+import os
 
 print("WebPへの現像を開始します")
 
 try:
     # 設定項目
     # WEBPのクオリティは0~100で指定する(低いほど高圧縮)
-    quality = 100
+    quality = 50
     # リサイズ(各辺を何分の1にするか)
-    compression_pith = 2
-
+    compression_pith = 3
     # 読み込む画像ファイル
     input_path = 'input.dng'
     # 出力されるファイル名
@@ -35,11 +35,26 @@ try:
 
     # WebP形式で保存
     params = [int(cv2.IMWRITE_WEBP_QUALITY), quality]
-
-    # ファイル名
     cv2.imwrite(output_path, img_resized, params)
 
-    print(f"圧縮完了 サイズ: {new_height}✕{new_width}")
+    # 現像前のデータサイズ取得
+    size_before_bytes = os.path.getsize(input_path)
+    size_before_kb = os.path.getsize(input_path) / 1024
+    size_before_mb = os.path.getsize(input_path) / (1024 * 1024)
+    # 現像後のサイズ取得
+    size_after_bytes = os.path.getsize(output_path)
+    size_after_kb = os.path.getsize(output_path) / 1024
+    size_after_mb = os.path.getsize(output_path) / (1024 * 1024)
+
+    # 結果の表示
+    print(f"現像前 (RAW): {size_before_bytes} bytes")
+    print(f"現像前 (RAW): {size_before_kb:.2f} KB")
+    print(f"現像前 (RAW): {size_before_mb:.2f} MB")
+    print(f"現像後 (JPEG): {size_after_bytes} bytes")
+    print(f"現像後 (JPEG): {size_after_kb:.2f} KB")
+    print(f"現像後 (JPEG): {size_after_mb:.2f} MB")
+    print(f"圧縮率 {(size_after_bytes / size_before_bytes) * 100:.1f}%")
+    print(f"圧縮完了 サイズ: {new_height} ✕ {new_width}")
 
 except Exception as e:
     print(f"\nエラーが発生しました: {e}")
