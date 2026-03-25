@@ -35,7 +35,7 @@ time.sleep(0.5)
 start_time = time.time()
 
 try:
-    for i in range(1, 1): # 1~22まで繰り返す
+    for i in range(1, 2): # 1~22まで繰り返す
         # 次の撮影予定時間
         target_time = start_time + (i - 1)
 
@@ -47,7 +47,7 @@ try:
         print(wait_time)
         
         # ファイル名
-        file0 = f"image_cam0_modeM_100000_ISO4_{i:02d}.jpg"
+        file0 = f"image_modeM_{SHUTTER_SPEED}_ISO{ISO_GAIN}_{i:02d}.jpg"
         # file1 = f"image_cam1_{i:02d}.jpg"
 
         # 撮影
