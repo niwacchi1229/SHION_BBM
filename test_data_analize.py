@@ -22,8 +22,15 @@ try:
     print(f"ファイル '{SAVE_FILE_NAME}' に保存します")
     with open(SAVE_FILE_NAME, "wb") as f:
         f.write(bytes(read_data))
+    
+    
 
     print("復元完了")
+
+    print("バイナリデータの読み込み開始")
+    with open(SAVE_FILE_NAME , "rb") as f :
+        img_bin = f.read()
+    print(f"---バイナリデータの表示---\n{img_bin}")
 
 except Exception as e:
     print(f"\nエラーが発生しました: {e}")
