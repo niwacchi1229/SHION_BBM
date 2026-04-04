@@ -21,8 +21,9 @@ try:
         img_bin = f.read()
     write_data = list(img_bin)  # バイナリデータをリスト化しないとMT~~が動いてくれない
     file_size = len(write_data)
+    print(f"リスト化する前のデータ:\n{img_bin}")
     print(f"ファイルサイズ: {file_size} バイト")
-    print(write_data)
+    print(f"リスト化したデータ\n{write_data}")
 
     # 1. 消去 (Erase)
     # ----------------------------------------------------------------
@@ -65,8 +66,6 @@ try:
     read_data_bytes = Flash.READ_DATA_BYTES_SMF(TEST_ADDRESS, len(write_data))
     print("   -> READ_DATA_BYTES_SMF関数から戻りました。")
     print(f"   -> 読み出した生のバイトデータ: {read_data_bytes}") # 取得した生データを表示
-    
-    
     
     # 4. 検証 (Verify)
     # ----------------------------------------------------------------
