@@ -1,10 +1,13 @@
 from PIL import Image
 
-# with open("test_input.jpg" , "rb") as f :
-#     img1 = f.read()
-    
-with open("input.dng" , "rb") as f :
-    img2 = f.read()
+input_file_1 = test_input.jpg
+input_file_2 = input.dng
 
-# print(img1)
-print(img2)
+with open(f"input_file_1" , "rb") as f :
+    img1 = f.read()
+    
+# with open(f"input_file_2" , "rb") as f :
+#     img2 = f.read()
+
+print(img1)
+# print(img2)
