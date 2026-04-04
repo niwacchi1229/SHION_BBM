@@ -1,6 +1,10 @@
 from PIL import Image
 
-with open("test_input.jpg" , "rb") as f :
-    img = f.read()
+# with open("test_input.jpg" , "rb") as f :
+#     img1 = f.read()
     
-print(img)
+with open("input.dng" , "rb") as f :
+    img2 = f.read()
+
+# print(img1)
+print(img2)
